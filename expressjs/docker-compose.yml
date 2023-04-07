@@ -1,0 +1,6 @@
+services:
+  expressjs:
+    build: .
+    volumes:
+      - ./:/app
+      - /app/node_modules/
