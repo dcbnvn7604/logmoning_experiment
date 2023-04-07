@@ -8,6 +8,6 @@ WORKDIR /app
 
 RUN npm install
 
-ENTRYPOINT ['node', 'app.js']
+ENTRYPOINT ["node", "app.js"]
 
-HEALTHCHECK --interval=5m --timeout=3s CMD curl localhost:80 || exit 1
+HEALTHCHECK CMD curl -f localhost:80/healcheck || exit 1

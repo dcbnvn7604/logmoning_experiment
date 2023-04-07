@@ -14,6 +14,10 @@ app.get('/healcheck', (req, res) => {
     res.send('server healthy')
 })
 
+app.get('/api/chain', (req, res) => {
+    res.send('success')
+})
+
 app.listen(port, () => {
     console.info('server running')
 })
