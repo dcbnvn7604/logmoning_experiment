@@ -7,3 +7,4 @@ services:
       test: ["CMD-SHELL", "curl -s -k https://localhost:9200 | grep 'missing authentication credentials' || exit 1"]
     environment:
       ES_JAVA_OPTS: -Xms1g -Xmx1g
+      ELASTIC_PASSWORD: ${ELASTIC_PASSWORD}
