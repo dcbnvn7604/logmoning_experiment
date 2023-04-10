@@ -4,7 +4,7 @@ const morgan = require('morgan')
 const app = express()
 app.use(morgan('combined', {
     skip: (req, res) => {
-        return req.baseUrl != '/healcheck'
+        return req.originalUrl == '/healcheck'
     }
 }))
 
