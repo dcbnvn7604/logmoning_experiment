@@ -1,4 +1,8 @@
 services:
+  expressjs:
+    image: expressjs-expressjs
+    ports:
+      - 8080:80
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.6.2
     ports:
@@ -36,4 +40,3 @@ services:
     depends_on:
       elasticsearch:
         condition: service_healthy
-
