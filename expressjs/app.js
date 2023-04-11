@@ -1,34 +1,15 @@
 const express = require('express')
 const morgan = require('morgan')
-const rfs = require("rotating-file-stream")
 const winston = require('winston')
 const { AsyncLocalStorage } = require('async_hooks')
 const { v4: uuid } = require("uuid");
 const { combine, timestamp, json } = winston.format
 
-LOG_DIR = '/var/log/expressjs'
-
-const accessLogStream = rfs.createStream("access.log", {
-    size: "10M",
-    interval: "1d",
-    maxFiles: 3,
-    path: LOG_DIR
-})
-
-const appLogStream = rfs.createStream("app.log", {
-    size: "10M",
-    interval: "1d",
-    maxFiles: 3,
-    path: LOG_DIR
-})
-
 const winstonLogger = winston.createLogger({
     level: 'debug',
     format: combine(timestamp(), json()),
     defaultMeta: { service: 'expressjs' },
-    transports: [new winston.transports.Stream({
-        stream: appLogStream
-    })],
+    transports: [new winston.transports.Console()],
 });
 
 const logger = {
@@ -55,8 +36,7 @@ const app = express()
 app.use(morgan('combined', {
     skip: (req, res) => {
         return req.originalUrl == '/healcheck'
-    },
-    stream: accessLogStream
+    }
 }))
 
 const context = new AsyncLocalStorage();
