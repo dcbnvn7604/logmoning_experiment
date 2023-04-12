@@ -47,4 +47,15 @@ services:
       - ./elasticsearch/filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
+  logstash:
+    image: docker.elastic.co/logstash/logstash:8.6.2
+    volumes:
+      - ./elasticsearch/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+      - ./elasticsearch/logstash/pipeline:/usr/share/logstash/pipeline
+      - ./elasticsearch/certs:/usr/share/logstash/config/certs
+    environment:
+      ELASTICSEARCH_PASSWORD: ${ELASTIC_PASSWORD}
+    depends_on:
+      - filebeat
+      - elasticsearch
 
