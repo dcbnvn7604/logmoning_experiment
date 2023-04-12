@@ -14,5 +14,6 @@ filebeat.autodiscover:
             - type: container
               paths:
                 - /var/lib/docker/containers/${data.docker.container.id}/*.log
+              exclude_lines: ['^{"level"']
 output.logstash:
   hosts: ["logstash:5044"]
