@@ -58,4 +58,19 @@ services:
     depends_on:
       - filebeat
       - elasticsearch
+  metricbeat:
+    image: docker.elastic.co/beats/metricbeat:8.6.2
+    user: root
+    cap_add:
+      - sys_ptrace
+      - dac_read_search
+    environment:
+      ELASTICSEARCH_PASSWORD: ${ELASTIC_PASSWORD}
+    volumes:
+      - ./elasticsearch/metricbeat/metricbeat.yml:/usr/share/metricbeat/metricbeat.yml:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /sys/fs/cgroup:/hostfs/sys/fs/cgroup:ro
+      - /proc:/hostfs/proc:ro
+      - /:/hostfs:ro"
+      - ./elasticsearch/certs:/usr/share/metricbeat/config/certs
 
